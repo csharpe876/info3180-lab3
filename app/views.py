@@ -17,6 +17,19 @@ def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
 
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    """Render the website's contact page."""
+    form = ContactForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            # Process the form data and send email
+            flash('Message sent successfully!', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash_errors(form)
+    return render_template('contact.html', form=form)
+
 
 ###
 # The functions below should be applicable to all Flask apps.
